@@ -1,4 +1,5 @@
 PCB and schematic for an STM32G473-based Laser Scanning Microscope v0.1
+Uses two Optical Pickup units (HOP-150x), one to hold the sample, the other to scan the sample with a laser. Each pickup covers one horizontal axis, while both use the Z axis to focus (bottom pickup for coarse focus, top one for fine focus)
 
 I designed it to be printed and partially assembled by JLCPCB.
 The diameters are very slightly under the 5cm by 5cm limit for the four layers for $2 deal.
@@ -17,6 +18,6 @@ General notes:
 4. I setup the ADC inputs to make use of the STM32's PGA (Programmable Gain Array), which lets me adjust the amplification of the photodiode output.
 5. The laser power scales too high - the useable range is from 0-2000 (instead of 0-4096), after that the laser doesn't get any brighter, which means it's probably slowly getting fried.
 
-Here's a picture of the FES (Focus Error Signal) I got when pointing the OPU at a DVD, and changing the coarse focus from min to max:
+Here's a picture of the FES (Focus Error Signal) I got when pointing the OPU (Optical Pickup Unit) at a DVD, and changing the coarse focus from min to max:
 ![the FES signal obtained from the OPU through the PCB](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/PCB-FES.png)
 
