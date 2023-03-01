@@ -18,6 +18,8 @@ General notes:
 3. For some reason, connecting the GNDA pins to the OPU via the header pins results in the laser dimming. I haven't figured out why yet.
 4. I setup the ADC inputs to make use of the STM32's PGA (Programmable Gain Array), which lets me adjust the amplification of the photodiode output.
 5. The laser power scales too high - the useable range is from 0-2000 (instead of 0-4096), after that the laser doesn't get any brighter, which means it's probably slowly getting fried.
+6. The PCB routing is not very efficent and noise-resistant.
+7. The STM32G473 has 7 DACS, which is why I chose it, but most of them can be easily replaced with PWM and a filter (except for the laser). This opens up the possibility of a much cheaper design. More testing needed.
 
 Here's a picture of the FES (Focus Error Signal) I got when pointing the OPU (Optical Pickup Unit) at a DVD, and changing the coarse focus from min to max:
 ![the FES signal obtained from the OPU through the PCB](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/PCB-FES.png)
