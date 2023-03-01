@@ -15,7 +15,7 @@ This is my first foray into PCB design and while it functions, it has some notab
 General notes:
 1. The BOOT0 switch is pretty much useless
 2. I peeled the support tab off an FFC cable and added some tape on top to thicken it, which mostly solved the FFC connector clearance issue, but the connection is sometimes shoddy
-3. For some reason, connecting the GNDA pins to the OPU via the header pins results in the laser dimming. I haven't figured out why yet.
+3. For some reason, connecting the GNDA pins to the OPU via the header results in the laser dimming. I haven't figured out why yet.
 4. I setup the ADC inputs to make use of the STM32's PGA (Programmable Gain Array), which lets me adjust the amplification of the photodiode output.
 5. The laser power scales too high - the useable range is from 0-2000 (instead of 0-4096), after that the laser doesn't get any brighter, which means it's probably slowly getting fried.
 6. The PCB routing is not very efficent and noise-resistant.
