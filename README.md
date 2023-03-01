@@ -21,6 +21,6 @@ General notes:
 6. The PCB routing is not very efficent and noise-resistant.
 7. The STM32G473 has 7 DACS, which is why I chose it, but most of them can be easily replaced with PWM and a filter (except for the laser). This opens up the possibility of a much cheaper design. More testing needed.
 
-Here's a picture of the FES (Focus Error Signal) I got when pointing the OPU (Optical Pickup Unit) at a DVD, and changing the coarse focus from min to max:
+Here's a picture of the FES (Focus Error Signal) I got when pointing the OPU at a DVD, and changing the coarse focus from min to max:
 ![the FES signal obtained from the OPU through the PCB](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/PCB-FES.png)
 
