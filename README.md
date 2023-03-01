@@ -1,5 +1,7 @@
 PCB and schematic for an STM32G473-based Laser Scanning Microscope v0.1
 
+Software is a work-in-progress
+
 Uses two Optical Pickup Units (or OPU), model HOP-150x, one to hold the sample, the other to scan the sample with a laser. Each pickup covers one horizontal axis, while both use the Z axis to focus (bottom pickup for coarse focus, top one for fine focus)
 
 I designed it to be printed and partially assembled by JLCPCB.
@@ -24,3 +26,5 @@ General notes:
 Here's a picture of the FES (Focus Error Signal) I got when pointing the OPU at a DVD, and changing the fine focus from min to max:
 ![the FES signal obtained from the OPU through the PCB](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/PCB-FES.png)
 
+Here's what the printed PCB looks like, without the hand-soldered components:
+![PCB picture](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/PCB-PIC.jpg)
