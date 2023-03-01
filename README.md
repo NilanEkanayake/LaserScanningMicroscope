@@ -29,4 +29,4 @@ Here's a picture of the FES (Focus Error Signal) I got when pointing the OPU at 
 Here's what the printed PCB looks like, without the hand-soldered components:
 ![PCB picture](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/PCB-PIC.jpg)
 
-Credit to https://github.com/kototoibashi/dvd-pickup-microscope-poc and https://github.com/GaudiLabs/OpenLaserScanningMicroscope for providing schematic ideas and OPU pinout
+Credit to https://github.com/kototoibashi/dvd-pickup-microscope-poc and https://github.com/GaudiLabs/OpenLaserScanningMicroscope for schematic ideas and OPU pinout
