@@ -18,4 +18,5 @@ General notes:
 5. The laser power scales too high - the useable range is from 0-2000 (instead of 0-4096), after that the laser doesn't get any brighter, which means it's probably slowly getting fried.
 
 Here's a picture of the FES (Focus Error Signal) I got when pointing the OPU at a DVD, and changing the coarse focus from min to max:
-https://github.com/NilanEkanayake/LaserScanningMicroscope/raw/main/assets/PCB-FES.png
+![the FES signal obtained from the OPU through the PCB](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/PCB-FES.png)
+
