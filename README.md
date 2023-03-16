@@ -29,7 +29,7 @@ Here's a picture of the FES (Focus Error Signal) I got when pointing the OPU at 
 Here's what the printed PCB looks like, without the hand-soldered components:
 ![PCB picture](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/PCB-PIC.jpg)
 
-Here's a picture of a CD, taken at maximum zoom. The warping in the left side of the image is caused by the OPU scan head resetting before each line. I hope to vastly improve upon this result with better software and a better enclosure with fewer vibrations.
+Here's a picture of a CD's pits and lands, taken at maximum zoom. The warping in the left side of the image is caused by the OPU scan head resetting before each line. I hope to vastly improve upon this result with better software and a better enclosure with fewer vibrations.
 ![scanned image of the pits and lands on a CD](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/scanned-CD.png)
 
 
