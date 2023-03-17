@@ -29,7 +29,7 @@ Here's what the printed PCB looks like, without the hand-soldered components:
 ![PCB picture](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/PCB-PIC.jpg)
 
 Here's a picture of a CD's pits and lands, taken at maximum zoom:
-![scanned image of the pits and lands on a CD](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/scanned-CD-5.png)
+![scanned image of the pits and lands on a CD](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/scanned-CD-6.png)
 
 
 Credit to https://github.com/kototoibashi/dvd-pickup-microscope-poc and https://github.com/GaudiLabs/OpenLaserScanningMicroscope for schematic ideas and OPU pinout
