@@ -1,13 +1,10 @@
 Flash/modify with STM32CUBEIDE
 
 Very basic, just to test the hardware.
-Needs many improvements and client software for PC.
+Needs improvements and client software for PC.
 
-For usage, look at the comments and switch statement in the while loop found in main.c
-
-I use HTerm to send and recieve data.
-
-To save an image: click "save output" in HTerm, save to data.txt, open and delete the final line, as well as the lines up until the image data at the top, along with the first line of the image as the software has a bug that makes it have garbage values.
+I use HTerm to send and recieve data, and save the image data to a file:
+click "save output" in HTerm, save to data.txt, open and delete the final line, as well as the lines up until the image data at the top.
 
 To turn the data into an image I use this very basic python script:
 ```

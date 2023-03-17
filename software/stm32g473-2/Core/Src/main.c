@@ -270,47 +270,48 @@ uint16_t coarseFocus() {
 void scan() {
 	//TODO: delays based on resolution to avoid warping and artifacts from the VCM catching up
 	//TODO: when coarse focussing, set fine focus VCM to center?
-	//TODO: Figure out why first scanned line is always garbage
+	//TODO: reset focus VCMs before focussing to avoid dips at the start of the scan
+	//TODO: improve focus accuracy, especially coarse (and ensure fine is accurate as well) - increase timers?
+	//TODO: Doing too many scans in one program run results in only getting very warped images out. - might have been fixed by increasing row[] size
+	//TODO: limit adcAvg to 10, as I haven't seen any benefits past that
 	int raw;
-	unsigned char row[xRes*4];
+	unsigned char row[(xRes*5)+1]; //maybe not long enough? because of delims? +1 because of missing last char '\n' at end of row - only need +1 for printing -> otherwise just one char at the end is needed, not two
 	//unsigned char row[xRes*4]; //max 8192 = 4 digits long
 	uint16_t usedCounter = 0; //keep track of how much of the array has been filled
 
 	HAL_Delay(100);
 	printf("starting scan loop\r\n");
 	for (int y=0; y<yRes; y++) {
+		  //memset(row, 0, sizeof row); //see if this fixes corruption - doesn't work -- no longer needed?
 		  HAL_DAC_SetValue(&hdac3, DAC_CHANNEL_2, DAC_ALIGN_12B_R, scanOffsetY+(y*skipSteps));
-		  HAL_Delay(1);
+		  HAL_Delay(10);
 		  //delay_us(20);
 		  usedCounter = 0;
 		  for (int x=0; x<xRes; x++) {
 			  raw = 0;
 			  HAL_DAC_SetValue(&hdac3, DAC_CHANNEL_1, DAC_ALIGN_12B_R, scanOffsetX+(x*skipSteps));
-			  if (x==0) {
-				  HAL_Delay(20);
+			  if (x <= 1) {
+				  HAL_Delay(60);
 			  } else {
-				  HAL_Delay(1);
+				  HAL_Delay(3);
 			  }
 			  //delay_us(500);
 			  for (int i=1; i<=adcAvg; i++) {
 				  raw += analogRead(5)+analogRead(1);
-				  delay_us(100);
+				  delay_us(50);
 			  }
 			  raw = (raw/adcAvg);
+			  raw = 8191 - raw; //invert the image
 			  //printf("%d\r\n", raw);
 			  if (x+1 != xRes) {
 				  usedCounter += sprintf(row+usedCounter, "%d,", raw);
 			  } else {
-				  /*if (y+1 != yRes) {
-					  usedCounter += sprintf(row+usedCounter, "%d:", raw);
-				  } else {
-					  usedCounter += sprintf(row+usedCounter, "%d|", raw);
-				  */
 				  usedCounter += sprintf(row+usedCounter, "%d\r\n", raw);
 			  }
 		  }
 		  //can use usedCounter instead of sizeof(row) to account for >512 by splitting?
 		  //temp -> remove last comma for easy parsing
+		  HAL_Delay(5); //delays around USB transmit don't help line corruption
 		  static uint8_t rc = USBD_OK;
 		  do {
 		          rc = CDC_Transmit_FS(row, usedCounter);
@@ -321,6 +322,7 @@ void scan() {
 		          /// TODO: Handle this error.
 		          printf("Failed to send image");
 		      }
+		  HAL_Delay(5);
 		  //HAL_Delay(30);
 		  //memset(row, 0, xRes*4);
 
