@@ -20,7 +20,7 @@ General notes:
 5. The laser power scales too high - the useable range is from 0-2000 (instead of 0-4096), after that the laser doesn't get any brighter, which means it's probably slowly getting fried.
 6. The PCB routing is not very efficent and noise-resistant.
 7. The STM32G473 has 7 DACS, which is why I chose it, but most of them can be easily replaced with PWM and a filter (except for the laser). This opens up the possibility of a much cheaper design. More testing needed.
-8. There's minor warping along the vertical and horizontal axis, which I assume comes from the opamps switching between sourcing and sinking (see assets/scanned-CD-warped.png)
+8. There's minor warping along the vertical and horizontal axis at the center line of the VCM range, which I assume comes from the opamps switching between sourcing and sinking (see assets/scanned-CD-warped.png)
 
 Here's a picture of the FES (Focus Error Signal) I got when pointing the OPU at a DVD, and changing the fine focus from min to max:
 ![the FES signal obtained from the OPU through the PCB](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/PCB-FES.png)
