@@ -19,7 +19,7 @@ General notes:
 4. I setup the ADC inputs to make use of the STM32's PGA (Programmable Gain Array), which lets me adjust the amplification of the photodiode output.
 5. The laser power scales too high - the useable range is from 0-2000 (instead of 0-4096), after that the laser doesn't get any brighter, which means it's probably slowly getting fried.
 6. The PCB routing is not very efficent and noise-resistant.
-7. The STM32G473 has 7 DACS, which is why I chose it, but all of the DACs except the laser can be replaced PWM.
+7. The STM32G473 has 7 DACS, which is why I chose it, but after some testing, it seems that all of the DACs except the laser can be replaced PWM.
 8. There's minor warping along the vertical and horizontal axis at the center line of the VCM range, which I assume comes from the opamps switching between sourcing and sinking (see assets/scanned-CD-warped.png)
 
 Here's a picture of the FES (Focus Error Signal) I got when pointing the OPU at a DVD, and changing the fine focus from min to max:
