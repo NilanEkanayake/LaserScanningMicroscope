@@ -1,17 +1,15 @@
-Flash/modify with STM32CUBEIDE
+To get started:
+1. Connect the PCB to a PC with USB and an STLink (Use the header's SWDIO, SWCLK and GND pins).
+2. Open LSM-scanner in STM32CubeIDE and flash it to the PCB
+3. Setup and run the LSM-client software on the host PC and select the device in the menubar.
 
-Very basic, just to test the hardware.
-Needs improvements and client software for PC.
-
-I use HTerm to send and recieve data, and save the image data to a file:
-click "save output" in HTerm, save to data.txt, open and delete the final line, as well as the lines up until the image data at the top.
-
-To turn the data into an image I use this very basic python script:
+To install the required packages and load LSM-client, open a terminal in the LSM-client folder and run:
 ```
-from matplotlib import pyplot as plt
-from numpy import genfromtxt
-image = genfromtxt('data.txt', delimiter=',', dtype="uint32")
-
-plt.imshow(image, cmap='gray')
-plt.show()
+python3 -m pip install -r requirements.txt
 ```
+Then to launch the software:
+```
+python3 LSMclient.py
+```
+
+ Flashing the PCB should also be possible using only USB and changing the BOOT0 switch, but I haven't tested it.
