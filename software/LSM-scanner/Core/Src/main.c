@@ -327,7 +327,7 @@ void coarseFocus() {
 }
 
 //main scan
-void scan(bool focusType) {
+void scan(uint8_t scanType) {
 	int raw;
 	unsigned char row[(xRes*6)+1]; //each number can be 5 characters long (4+sign), and there's a delimiter following. The +4 is for the \n
 	//unsigned char row[xRes*4]; //max 8192 = 4 digits long
@@ -336,7 +336,7 @@ void scan(bool focusType) {
 	//set laser power
 	HAL_DAC_SetValue(&hdac2, DAC_CHANNEL_1, DAC_ALIGN_12B_R, laserPower);
 
-	HAL_Delay(100);
+	HAL_Delay(1);
 	//printf("starting scan loop\r\n"); //disabling so I can straight copy values
 	for (int y=0; y<yRes; y++) {
 		  //memset(row, 0, sizeof row); //see if this fixes corruption - doesn't work -- no longer needed?
@@ -355,7 +355,7 @@ void scan(bool focusType) {
 			  }
 			  //delay_us(500);
 			  for (int i=1; i<=adcAvg; i++) {
-				  if (focusType == 1) {
+				  if (scanType == 2) {
 					  raw += analogRead(5)-analogRead(1); //scan FES instead
 				  } else {
 					  raw += analogRead(5)+analogRead(1);
@@ -363,7 +363,7 @@ void scan(bool focusType) {
 				  delay_us(50);
 			  }
 			  raw = (raw/adcAvg);
-			  if (focusType == 0) {
+			  if (scanType == 1) {
 				  raw = 8191 - raw; //invert the image
 			  }
 			  //printf("%d\r\n", raw);
@@ -525,7 +525,7 @@ int main(void)
 
 				if (scanOffsetX < 4096 && scanOffsetY < 4096) { //doesn't go to else properly
 					if (scanOffsetX >= 0 && scanOffsetY >= 0) {
-						if (num == 0 || num == 1) {
+						if (num == 1 || num == 2) {
 							//printf("passed checks\r\n");
 						    //call scan function
 						    //might have issues sending if char count is over 512 in the X axis (maybe break into chunks if an issue)
@@ -632,7 +632,7 @@ int main(void)
 
 		  newReceived = false;
 	  }
-	  HAL_Delay(100); //100ms polling delay
+	  HAL_Delay(10); //10ms polling delay
 
 	  /* USER CODE BEGIN 3 */
 	}

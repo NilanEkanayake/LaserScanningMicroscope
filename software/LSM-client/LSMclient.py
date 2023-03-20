@@ -30,23 +30,25 @@ class ui(QMainWindow):
         self.yRes = 200
         self.xOffset = 2047
         self.yOffset = 2047
-        self.skipSteps = 1
+        self.skipSteps = 99
         self.laserIntensity = 2200
         self.adcGain = 0
         self.adcAvg = 4
+        self.scanned = False
 
         #define actions
         self.graph_widget.hide()
         self.scan_button.clicked.connect(self.scan)
         self.coarse_button.clicked.connect(self.coarseFocus)
         self.fine_button.clicked.connect(self.fineFocus)
+        self.save_button.clicked.connect(self.save)
         self.x_resolution_edit.textChanged.connect(self.setxRes)
         self.y_resolution_edit.textChanged.connect(self.setyRes)
         self.x_offset_slider.setRange(0, 4094)
         self.y_offset_slider.setRange(0, 4094)
         self.x_offset_slider.valueChanged.connect(self.xSlider)
         self.y_offset_slider.valueChanged.connect(self.ySlider)
-        self.zoom_slider.setRange(0, 100)
+        self.zoom_slider.setRange(1, 99)
         self.zoom_slider.valueChanged.connect(self.zoom)
         self.laser_slider.setRange(1500, 2500)
         self.laser_slider.valueChanged.connect(self.laser)
@@ -63,87 +65,113 @@ class ui(QMainWindow):
         self.y_resolution_edit.setText(str(self.yRes))
         self.x_offset_slider.setValue(self.xOffset)
         self.y_offset_slider.setValue(self.yOffset)
-        self.zoom_slider.setValue(100-self.skipSteps)
+        self.zoom_slider.setValue(self.skipSteps)
         self.laser_slider.setValue(self.laserIntensity)
         self.avg_combo.setCurrentIndex(self.adcAvg)
 
 
     #actions
     def scan(self):
+        localxRes = self.xRes
+        localyRes = self.yRes
         #disable buttons
         self.scan_button.setEnabled(False)
         self.coarse_button.setEnabled(False)
         self.fine_button.setEnabled(False)
+        self.save_button.setEnabled(False)
         
         self.graph_widget.hide()
         self.image_view.show()
-        image = np.zeros((self.yRes, self.xRes), dtype=int)
+        image = np.zeros((localyRes, localxRes), dtype=int)
         if device.is_open:
+            #clear buffer
+            device.reset_input_buffer()
+            device.reset_output_buffer()
 
             #set values
-            device.write(bytes('1' + str(self.xRes), 'ascii'))
-            device.write(bytes('2' + str(self.yRes), 'ascii'))
+            device.write(bytes('1' + str(localxRes), 'ascii'))
+            sleep(0.1)
+            device.write(bytes('2' + str(localyRes), 'ascii'))
+            sleep(0.1)
             device.write(bytes('4' + str(self.xOffset), 'ascii'))
+            sleep(0.1)
             device.write(bytes('5' + str(self.yOffset), 'ascii'))
-            device.write(bytes('3' + str(self.skipSteps), 'ascii'))
+            sleep(0.1)
+            device.write(bytes('3' + str(100-self.skipSteps), 'ascii'))
+            sleep(0.1)
             device.write(bytes('7' + str(self.laserIntensity), 'ascii'))
+            sleep(0.1)
             device.write(bytes('6' + str(self.adcGain), 'ascii'))
+            sleep(0.1)
             device.write(bytes('8' + str(self.adcAvg), 'ascii'))
+            sleep(0.1)
 
-            progress = QProgressDialog("Scan progress: ", None, 0, self.yRes)
+            progress = QProgressDialog("Scan progress: ", None, 0, localyRes)
             progress.setWindowModality(QtCore.Qt.WindowModal)
 
 
             
 
             #start scan
-            device.write(b'00')
-            for y in range(int(self.yRes)):
+            device.write(bytes('01', 'ascii'))
+            for y in range(int(localyRes)):
                 currentLine = device.readline() # might time out
                 currentLine = currentLine.decode("ascii") 
                 if "Offset too small" in currentLine:
-                    QMessageBox.Abort(self, "Error", " Scan error: Offset too small")
+                    QMessageBox.about(self, "Error", " Scan error: Decrease zoom or resolution")
                     #enable buttons
                     self.scan_button.setEnabled(True)
                     self.coarse_button.setEnabled(True)
                     self.fine_button.setEnabled(True)
+                    self.save_button.setEnabled(True)
+                    #clear buffer
+                    device.reset_input_buffer()
+                    device.reset_output_buffer()
                     return
                 elif "Dimensions too large" in currentLine:
-                    QMessageBox.Abort(self, "Error", " Scan error: Dimensions too large")
+                    QMessageBox.about(self, "Error", " Scan error: Dimensions too large")
                     #enable buttons
                     self.scan_button.setEnabled(True)
                     self.coarse_button.setEnabled(True)
                     self.fine_button.setEnabled(True)
+                    self.save_button.setEnabled(True)
+                    #clear buffer
+                    device.reset_input_buffer()
+                    device.reset_output_buffer()
                     return
                 elif "Failed to send image" in currentLine:
-                    QMessageBox.Abort(self, "Error", " Scan error: Failed to send image")
+                    QMessageBox.about(self, "Error", " Scan error: Failed to send image")
                     #enable buttons
                     self.scan_button.setEnabled(True)
                     self.coarse_button.setEnabled(True)
                     self.fine_button.setEnabled(True)
+                    self.save_button.setEnabled(True)
+                    #clear buffer
+                    device.reset_input_buffer()
+                    device.reset_output_buffer()
                     return
                 else:
                     tempList = currentLine.split(',')
-                    for x in range(self.xRes):
+                    for x in range(localxRes):
                         image[y][x] = int(tempList[x])
                 progress.setValue(y)
             minValue = 100000
             maxValue = -100000
-            for y in range(self.yRes):
-                for x in range(self.xRes):
+            for y in range(localyRes):
+                for x in range(localxRes):
                     if image[y][x] > maxValue:
                         maxValue = image[y][x]
                     elif image[y][x] < minValue:
                         minValue = image[y][x]
 
-            for y in range(self.yRes):
-                for x in range(self.xRes):
+            for y in range(localyRes):
+                for x in range(localxRes):
                     image[y][x] = ((image[y][x] - minValue) / (maxValue - minValue)) * 255 #map to greyscale
 
             image = image.astype(np.uint8)
 
             #display image
-            result = QtGui.QImage(image.data, self.yRes, self.xRes, QtGui.QImage.Format_Indexed8)
+            result = QtGui.QImage(image.data, localyRes, localxRes, QtGui.QImage.Format_Indexed8)
             result.ndarray = image
             for i in range(256):
                 result.setColor(i, QtGui.QColor(i, i, i).rgb())
@@ -152,16 +180,26 @@ class ui(QMainWindow):
             pixmap_image = QtGui.QPixmap(pixmap_image)
             self.image_view.setPixmap(pixmap_image)
             self.image_view.show()
+            self.scanned = True
 
             #enable buttons
             sleep(1)
             self.scan_button.setEnabled(True)
             self.coarse_button.setEnabled(True)
             self.fine_button.setEnabled(True)
+            self.save_button.setEnabled(True)
+
+            #clear buffer
+            device.reset_input_buffer()
+            device.reset_output_buffer()
         
     def coarseFocus(self):
         goneBack = False
         if device.is_open:
+            #clear buffer
+            device.reset_input_buffer()
+            device.reset_output_buffer()
+
             self.image_view.hide()
             self.graph_widget.clear()
             #setup graph
@@ -179,13 +217,19 @@ class ui(QMainWindow):
             self.scan_button.setEnabled(False)
             self.coarse_button.setEnabled(False)
             self.fine_button.setEnabled(False)
+            self.save_button.setEnabled(False)
 
             #set values
             device.write(bytes('4' + str(self.xOffset), 'ascii'))
+            sleep(0.1)
             device.write(bytes('5' + str(self.yOffset), 'ascii'))
+            sleep(0.1)
             device.write(bytes('7' + str(self.laserIntensity), 'ascii'))
+            sleep(0.1)
             device.write(bytes('6' + str(self.adcGain), 'ascii'))
+            sleep(0.1)
             device.write(bytes('8' + str(self.adcAvg), 'ascii'))
+            sleep(0.1)
 
             device.write(bytes('92', 'ascii'))
             while True:
@@ -208,6 +252,10 @@ class ui(QMainWindow):
                         self.scan_button.setEnabled(True)
                         self.coarse_button.setEnabled(True)
                         self.fine_button.setEnabled(True)
+                        self.save_button.setEnabled(True)
+                        #clear buffer
+                        device.reset_input_buffer()
+                        device.reset_output_buffer()
                         break
                     else:
                         xG = []
@@ -217,6 +265,10 @@ class ui(QMainWindow):
     def fineFocus(self):
         goneBack = False
         if device.is_open:
+            #clear buffer
+            device.reset_input_buffer()
+            device.reset_output_buffer()
+        
             self.image_view.hide()
             self.graph_widget.clear()
             #setup graph
@@ -234,13 +286,19 @@ class ui(QMainWindow):
             self.scan_button.setEnabled(False)
             self.coarse_button.setEnabled(False)
             self.fine_button.setEnabled(False)
+            self.save_button.setEnabled(False)
 
             #set values
             device.write(bytes('4' + str(self.xOffset), 'ascii'))
+            sleep(0.1)
             device.write(bytes('5' + str(self.yOffset), 'ascii'))
+            sleep(0.1)
             device.write(bytes('7' + str(self.laserIntensity), 'ascii'))
+            sleep(0.1)
             device.write(bytes('6' + str(self.adcGain), 'ascii'))
+            sleep(0.1)
             device.write(bytes('8' + str(self.adcAvg), 'ascii'))
+            sleep(0.1)
 
             device.write(bytes('91', 'ascii'))
 
@@ -264,6 +322,10 @@ class ui(QMainWindow):
                         self.scan_button.setEnabled(True)
                         self.coarse_button.setEnabled(True)
                         self.fine_button.setEnabled(True)
+                        self.save_button.setEnabled(True)
+                        #clear buffer
+                        device.reset_input_buffer()
+                        device.reset_output_buffer()
                         break
                     else:
                         xG = []
@@ -274,7 +336,7 @@ class ui(QMainWindow):
         device.port = self.sender().text()
         device.open()
         if device.is_open == False:
-            QMessageBox.Abort(self, "Failed", "Couldn't connect to: " + device.port)
+            QMessageBox.about(self, "Failed", "Couldn't connect to: " + device.port)
 
 
     def setxRes(self):
@@ -305,6 +367,12 @@ class ui(QMainWindow):
 
     def avg(self):
         self.adcAvg = str(self.avg_combo.currentText())
+
+    def save(self):
+        if self.image_view.isVisible() == True and self.scanned == True:
+            file, _filter = QFileDialog.getSaveFileName(self, caption='Save scan', filter='*.png')
+            self.image_view.pixmap().save(file, "PNG")
+
 
 
 

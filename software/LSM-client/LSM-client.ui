@@ -21,7 +21,7 @@
    <widget class="QPushButton" name="scan_button">
     <property name="geometry">
      <rect>
-      <x>405</x>
+      <x>380</x>
       <y>460</y>
       <width>141</width>
       <height>61</height>
@@ -342,6 +342,19 @@
       <width>400</width>
       <height>400</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="save_button">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>470</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Save image</string>
     </property>
    </widget>
   </widget>
