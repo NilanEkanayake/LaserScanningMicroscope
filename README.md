@@ -28,7 +28,7 @@ Here's a picture of the FES (Focus Error Signal) I got when pointing the OPU at 
 Here's what the printed PCB looks like, without the hand-soldered components:
 ![PCB picture](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/PCB-PIC.jpg)
 
-Here's a picture of a CD's pits and lands, taken at maximum zoom:
+Here's a picture of a CD's pits and lands:
 ![scanned image of the pits and lands on a CD](https://raw.githubusercontent.com/NilanEkanayake/LaserScanningMicroscope/main/assets/scanned-CD-6.png)
 
 
