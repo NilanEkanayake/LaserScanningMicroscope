@@ -5,10 +5,15 @@ Uses two Optical Pickup Units (or OPU), model HOP-150x, one to hold the sample, 
 
 Required parts (V2):
 1x 2.9mm (3mm doesn't fit) diameter metal rod, preferably 5cm. (I salvage mine from old CD/DVD players)
+
 1x 26pin, 0.5mm pitch, 10cm length FFC with pins on the same side (for bottom OPU) (https://www.aliexpress.com/item/1005004140412156.html works for this and next part)
+
 1x 26pin, 0.5mm pitch, 10cm length FFC with pins on the opposite side (for top OPU)
+
 1x V2 PCB (I had mine entirely manufactured by JLCPCB - I chose as many of JLCPCB's "basic parts" as possible to reduce assembly cost)
+
 1x 3D-printed enclosure (I printed mine using basic PLA on my own printer, but I assume you can also use JLCPCB's 3d-printing service for this too)
+
 1x 3D-printed sample holder (WIP, not ready for prime time)
 
 Assembly (V2):
