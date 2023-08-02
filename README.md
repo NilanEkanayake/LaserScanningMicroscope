@@ -18,6 +18,8 @@ Required parts (V2):
 
 1x 3D-printed sample holder (WIP, not ready for prime time)
 
+2x HOP-150x OPUs (I get mine from aliexpress)
+
 Assembly (V2):
 1. Remove the lens from the OPU destined to be the sample holder using a pair of tweezers, connect the FFC cable that has pins on the same side, and thread the cable through the slot in the enclosure, from the inside to the outside.
 2. Gently push the OPU directly into the enclosure, making sure that the FFC cable doesn't snag.
