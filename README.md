@@ -4,6 +4,7 @@ Uses two Optical Pickup Units (or OPU), model HOP-150x, one to hold the sample, 
 
 
 Required parts (V2):
+
 1x 2.9mm (3mm doesn't fit) diameter metal rod, preferably 5cm. (I salvage mine from old CD/DVD players)
 
 1x 26pin, 0.5mm pitch, 10cm length FFC with pins on the same side (for bottom OPU) (https://www.aliexpress.com/item/1005004140412156.html works for this and next part)
