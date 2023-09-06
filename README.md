@@ -1,8 +1,8 @@
 PCB and schematic for an STM32G431-based Laser Scanning Microscope v2
 
-Uses two Optical Pickup Units (or OPU), model HOP-150x, one to hold the sample, the other to scan the sample with a laser. Each pickup covers one horizontal axis, while both use the Z axis to focus (bottom pickup for coarse focus, top one for fine focus)
+TEMP NOTE: Current V2 has noise and stability issues. I'm fixing these, and will remove this note once I've updated things. For now, don't use.
 
-IMPORTANT: Currently I haven't tuned V2's software properly, so scanned images will have significant warping. I'll hopefully have that fixed in a few days.
+Uses two Optical Pickup Units (or OPU), model HOP-150x, one to hold the sample, the other to scan the sample with a laser. Each pickup covers one horizontal axis, while both use the Z axis to focus (bottom pickup for coarse focus, top one for fine focus)
 
 Required parts (V2):
 
