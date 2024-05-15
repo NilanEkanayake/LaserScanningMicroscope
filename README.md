@@ -2,7 +2,7 @@ PCB and schematic for an STM32G431-based Laser Scanning Microscope v2
 
 ![A slow zoom in to a CD, gif](https://github.com/NilanEkanayake/LaserScanningMicroscope/blob/main/CD.gif?raw=true) ![A slow zoom in to a rose leaf, gif](https://github.com/NilanEkanayake/LaserScanningMicroscope/blob/main/rose.gif?raw=true) 
 
-The above GIFs show a slow zoom into a CD (all the way to the pits and lands), and a rose leaf, respectively.
+The above GIFs show a slow zoom into a CD (all the way to the pits and lands), and a rose leaf, respectively. Both were taken with V1 of the microscope.
 
 TEMP NOTE: Current V2 has noise and stability issues. I'm fixing these, and will remove this note once I've updated things. For now, don't use.
 
