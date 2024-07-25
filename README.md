@@ -28,7 +28,7 @@ Assembly (V2):
 1. Remove the lens from the OPU destined to be the sample holder using a pair of tweezers, connect the FFC cable that has pins on the same side, and thread the cable through the slot in the enclosure, from the inside to the outside.
 2. Gently push the OPU directly into the enclosure, making sure that the FFC cable doesn't snag.
 3. Using a soldering iron, remove the large blob of solder on the edge of the large PCB on the top OPU, so that the pins are exposed and not shorted, and connect the FFC cable with pins on opposite sides
-4. Slot the OPU lens-down into the protrusions sticking up from the enclosure, and slot the 2.9mm rod through the aligned OPU and enclosure on the side above the bottom OPU's FFC cable slot. The top OPU should now be able to swing upwards like a hinge for easy sample access.
+4. Slot the OPU lens-down into the protrusions sticking up from the enclosure, and slot the 3mm rod through the aligned OPU and enclosure on the side above the bottom OPU's FFC cable slot. The top OPU should now be able to swing upwards like a hinge for easy sample access.
 5. Place the PCB into the slot on the side of the enclosure with the two FFC connectors facing up and right respectively, and connect the top OPU's cable to the connector on top of the PCB, and the bottom OPU's to the one on the right.
 6. Swing the top OPU upwards and place the sample holder in the hole previously occupied by the lens on the bottom OPU. Samples are placed in the center of the holder.
 
