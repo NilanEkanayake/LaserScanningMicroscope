@@ -72,6 +72,31 @@ class ui(QMainWindow):
 
     #actions
     def scan(self):
+
+        #do math here to get the max skipSteps, and map the zoom 0-100 range to 1 to max skipSteps
+        #Calculate maxSkipSteps from x and y seperately, then compare and take the lower value as the max.
+
+        #X
+        if self.xOffset >= (4096/2)-1:
+            xMinWidth = 4095-self.xOffset
+        else:
+            xMinWidth = self.xOffset
+        xMaxSkipSteps = int(xMinWidth/(self.xRes/2)) #only half of xRes on each side of the offset point
+        localXSkipSteps = int(1+(((99-self.skipSteps) / 98) * (xMaxSkipSteps-1)))
+
+        #Y
+        if self.yOffset >= (4096/2)-1:
+            yMinWidth = 4095-self.yOffset
+        else:
+            yMinWidth = self.yOffset
+        yMaxSkipSteps = int(yMinWidth/(self.yRes/2))
+        localYSkipSteps = int(1+(((99-self.skipSteps) / 98) * (yMaxSkipSteps-1)))
+
+        if localXSkipSteps >= localYSkipSteps:
+            localSkipSteps = localYSkipSteps
+        else:
+            localSkipSteps = localXSkipSteps
+
         localxRes = self.xRes
         localyRes = self.yRes
         #disable buttons
@@ -97,7 +122,7 @@ class ui(QMainWindow):
             sleep(0.1)
             device.write(bytes('5' + str(self.yOffset), 'ascii'))
             sleep(0.1)
-            device.write(bytes('3' + str(100-self.skipSteps), 'ascii'))
+            device.write(bytes('3' + str(localSkipSteps), 'ascii'))
             sleep(0.1)
             device.write(bytes('7' + str(self.laserIntensity), 'ascii'))
             sleep(0.1)
@@ -171,7 +196,7 @@ class ui(QMainWindow):
             image = image.astype(np.uint8)
 
             #display image
-            result = QtGui.QImage(image.data, localyRes, localxRes, QtGui.QImage.Format_Indexed8)
+            result = QtGui.QImage(image.data, localxRes, localyRes, QtGui.QImage.Format_Indexed8)
             result.ndarray = image
             for i in range(256):
                 result.setColor(i, QtGui.QColor(i, i, i).rgb())
@@ -209,8 +234,8 @@ class ui(QMainWindow):
             pen = pg.mkPen(color=(255, 0, 0))
             pen2 = pg.mkPen(color=(0, 255, 0))
             self.graph_widget.addLegend()
-            data_line = self.graph_widget.plot(xG, yG, pen=pen, name="forwards")
-            data_line2 = self.graph_widget.plot(xG, yG, pen=pen2, name="backtrack")
+            data_line = self.graph_widget.plot(xG, yG, pen=pen, name="initial")
+            data_line2 = self.graph_widget.plot(xG, yG, pen=pen2, name="retrace")
             self.graph_widget.show()
 
             #disable buttons
@@ -278,8 +303,8 @@ class ui(QMainWindow):
             pen = pg.mkPen(color=(255, 0, 0))
             pen2 = pg.mkPen(color=(0, 255, 0))
             self.graph_widget.addLegend()
-            data_line = self.graph_widget.plot(xG, yG, pen=pen, name="forwards")
-            data_line2 = self.graph_widget.plot(xG, yG, pen=pen2, name="backtrack")
+            data_line = self.graph_widget.plot(xG, yG, pen=pen, name="initial")
+            data_line2 = self.graph_widget.plot(xG, yG, pen=pen2, name="retrace")
             self.graph_widget.show()
 
             #disable buttons
