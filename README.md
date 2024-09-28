@@ -4,13 +4,17 @@ PCB and schematic for an STM32G431-based Laser Scanning Microscope v2
 
 The above GIFs show a slow zoom into a CD (all the way to the pits and lands), and a rose leaf, respectively. Both were taken with V1 of the microscope.
 
-### Note about laser burnout:
+### Notes about V2 laser burnout and overheating:
 When V2 (likely V1 too) is powered on, the DAC/PWM pins are pulled high during the boot process. This cannot be fixed through software as far as I know.
 The effect is that the laser driver circuit is given 3.3v on the DAC line briefly each time the PCB is plugged in. The current then provided to the laser is beyond what it can handle, and while it does not instantly burn out, it gets noticeably dimmer over time as the PCB is power-cycled. This effect is worsed by flashing firmware either with an STLink or through USB, as while in programming mode the pins are also pulled high. Therefore, make sure to disconnect the OPUs before flashing new firmware.
 
 The solution I've found is to add a pull-down resistor to the laser DAC's output. I was able to hand-solder one, but a PCB fix will be required nonetheless as doing so is very finicky.
 
 This issue also affects the VCMs as well. This results in a loose sample being thrown off the holder if one is present on power-on.
+
+Also, U5 and the VCM_COARSE and VCM_Y resistors get uncomfortably hot during prolonged operation. This may be exacerbated by using heavier samples that increase the needed current to drive the bottom VCM.
+
+For now, I recommend not directly using the project, and more as a source of inspiration. I am currently working on a new LSM version that fixes these issues (and others), but it will take a while.
 
 -----------------------------------------------------------------
 
