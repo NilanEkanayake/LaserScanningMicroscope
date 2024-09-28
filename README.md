@@ -12,7 +12,7 @@ The solution I've found is to add a pull-down resistor to the laser DAC's output
 
 This issue also affects the VCMs as well. This results in a loose sample being thrown off the holder if one is present on power-on.
 
-Also, U5 and the VCM_COARSE and VCM_Y resistors get uncomfortably hot during prolonged operation. This may be exacerbated by using heavier samples that increase the needed current to drive the bottom VCM.
+Also, U5 and the VCM/DAC_COARSE and VCM/DAC_Y resistors get uncomfortably hot during prolonged operation. This may be exacerbated by using heavier samples that increase the needed current to drive the bottom VCM.
 
 For now, I recommend not directly using the project, and more as a source of inspiration. I am currently working on a new LSM version that fixes these issues (and others), but it will take a while.
 
